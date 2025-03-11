@@ -24,7 +24,7 @@ let step state =
   | REM :: q, v1::v2::stack -> Ok (q, (v1 mod v2)::stack)
   (* Invalid configurations *)
   | _ :: q , v::[] -> Error("Runtime Error",state)
-  | _ :: q , [] -> Error("Runtime Error",state)
+  | _ :: q , [] -> Error("Runtime Error",state);;
 
 let eval_program (numargs, cmds) args =
   let rec execute = function
