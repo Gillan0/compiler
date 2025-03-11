@@ -1,5 +1,11 @@
 type command =
-  DefineMe (* Question 4.1 *)
+  |PUSH of int
+  |POP
+  |SWAP
+  |ADD
+  |SUB
+  |DIV
+  |REM ;;
 
 type program = int * command list
 
