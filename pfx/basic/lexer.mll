@@ -14,6 +14,13 @@
   |INT of int
   |EOF;;
 
+  type position = {
+    pos_fname : string; (* name of the file *)
+    pos_lnum : int; (* number of the line *)
+    pos_bol : int; (* nb of chars between the beginning of the file and the one of current line *)
+    pos_cnum : int; (* nb of characters since the beginning of the file *)
+  }
+
   let print_token = function
   | PUSH i -> Printf.printf "PUSH %d" i
   | POP -> print_string "POP"
