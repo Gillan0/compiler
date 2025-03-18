@@ -2,6 +2,9 @@
   (*
   open Parser
   *)
+
+  open Utils
+
   type token =
   |PUSH of int
   |POP
@@ -13,13 +16,6 @@
   |REM 
   |INT of int
   |EOF;;
-
-  type position = {
-    pos_fname : string; (* name of the file *)
-    pos_lnum : int; (* number of the line *)
-    pos_bol : int; (* nb of chars between the beginning of the file and the one of current line *)
-    pos_cnum : int; (* nb of characters since the beginning of the file *)
-  }
 
   let print_token = function
   | PUSH i -> Printf.printf "PUSH %d" i
@@ -33,9 +29,9 @@
   | INT i -> Printf.printf "INT %d" i
   | EOF -> print_string "EOF";;
 
-  let mk_int nb =
+  let mk_int nb loc=
     try INT (int_of_string nb)
-    with Failure _ -> failwith (Printf.sprintf "Illegal integer '%s': " nb)
+    with Failure _ -> raise (Location.Error(Printf.sprintf "Illegal integer '%s': " nb, loc))
 }
 
 let newline = (['\n' '\r'] | "\r\n")
@@ -45,7 +41,7 @@ let digit = ['0'-'9']
 
 rule token = parse
   (* newlines *)
-  | newline { token lexbuf }
+  | newline { Location.incr_line lexbuf; token lexbuf }
   (* blanks *)
   | blank + { token lexbuf }
   (* end of file *)
@@ -53,7 +49,7 @@ rule token = parse
   (* comments *)
   | "--" not_newline_char*  { token lexbuf }
   (* integers *)
-  | digit+ as nb           { mk_int nb }
+  | digit+ as nb           { mk_int nb (Location.curr lexbuf)}
   (* commands  *)
   |"add" { ADD }
   |"sub" { SUB }
@@ -64,8 +60,7 @@ rule token = parse
   |"swap" { SWAP }
   |"push" digit+ as nb {PUSH(int_of_string nb)}
   (* illegal characters *)
-  | _ as c                  { failwith (Printf.sprintf "Illegal character '%c': " c) }
-
+  | _ as c                  { raise (Location.Error(Printf.sprintf "Illegal character '%c': " c, Location.curr lexbuf)) }
 {
   let rec examine_all lexbuf =
   let result = token lexbuf in
