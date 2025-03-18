@@ -15,7 +15,7 @@ let step state =
   | [], _ -> Error("Nothing to step",state)
   (* Valid configurations *)
   | PUSH v :: q , stack -> Ok (q, v::stack)
-  | POP :: q , v::stack -> Ok (q, stack)
+  | POP :: q , _::stack -> Ok (q, stack)
   | SWAP :: q , v1::v2::stack -> Ok (q, v2::v1::stack)
   | ADD :: q , v1::v2::stack -> Ok (q, (v1 + v2)::stack)
   | SUB :: q, v1::v2::stack -> Ok (q, (v1 - v2)::stack)
@@ -23,8 +23,8 @@ let step state =
   | DIV :: q, v1::v2::stack -> Ok (q, (v1 / v2)::stack)
   | REM :: q, v1::v2::stack -> Ok (q, (v1 mod v2)::stack)
   (* Invalid configurations *)
-  | _ :: q , v::[] -> Error("Runtime Error",state)
-  | _ :: q , [] -> Error("Runtime Error",state);;
+  | _ , _::[] -> Error("Runtime Error",state)
+  | _ , [] -> Error("Runtime Error",state);;
 
 let eval_program (numargs, cmds) args =
   let rec execute = function
