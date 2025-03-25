@@ -31,20 +31,20 @@
 
 program:
 | i=INT  EOF { i, [] }
-| i=INT in=instructions EOF { i, in }
+| i=INT instr=instructions EOF { i, instr }
 
 instructions:
 | c=command e=instructions {c :: e}
 | c=command {[c]}
 
 command:
-| PUSH(int) {Ast.PUSH(int)}
-| POP { Ast.POP }
-| SWAP { Ast.SWAP }
-| ADD { Ast.ADD }
-| SUB { Ast.SUB }
-| MUL { Ast.MUL }
-| DIV { Ast.DIV }
-| REM { Ast.REM }
+| i=PUSH {PUSH(i)}
+| POP { POP }
+| SWAP { SWAP }
+| ADD { ADD }
+| SUB { SUB }
+| MUL { MUL }
+| DIV { DIV }
+| REM { REM }
 
 %%
