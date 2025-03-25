@@ -3,3 +3,7 @@
   (modules step_test)
   (libraries basicPfx))
 
+(test
+  (name compile_test)
+  (modules compile_test)
+  (libraries basicPfx))

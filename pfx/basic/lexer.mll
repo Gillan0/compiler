@@ -44,6 +44,6 @@ rule token = parse
   |"rem" { REM }
   |"pop" { POP }
   |"swap" { SWAP }
-  |"push" digit+ as nb {PUSH(int_of_string nb)}
+  |"push" blank* (digit+ as nb) {PUSH(int_of_string nb)}
   (* illegal characters *)
   | _ as c                  { raise (Location.Error(Printf.sprintf "Illegal character '%c': " c, Location.curr lexbuf)) }
