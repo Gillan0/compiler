@@ -25,4 +25,4 @@ let _ =
   (* function to register arguments *)
   let register_arg i = args := !args@[i] in
   (* each option -a INTEGER is considered as an argument *)
-  Arg.parse ["-a",Arg.Int register_arg,"integer argument"] parse_eval ""
+  Arg.parse ["-a",Arg.Int register_arg,"integer argument"] parse_eval "./tests/ok_prgm.pfx"
