@@ -1,0 +1,10 @@
+(library
+ (name funPfx) 
+ (libraries utils)
+ (modules Ast Lexer Parser))
+
+(ocamllex lexer)
+
+(menhir
+ (modules parser)
+ (flags --explain))
