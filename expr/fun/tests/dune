@@ -1,0 +1,4 @@
+(test
+  (name fun_test)
+  (modules fun_test)
+  (libraries funExpr))

@@ -27,3 +27,13 @@ let _ = compile "fun_prog.pfx";;
 let cmds = [PUSH(1); PUSH(5); SWAP; POP; PUSH(8); ADD; EXEC_SEQ([PUSH(2);PUSH(1);ADD]); EXEC];;
 let state = (0,  cmds);;
 let _ = eval_program (state) [];;
+
+(* Test #2 : Expected result 5*)
+let cmds = [PUSH(5); PUSH(7); PUSH(1); GET];;
+let state = (0,  cmds);;
+let _ = eval_program (state) [];;
+
+(* Test #2 : Expected result 7*)
+let cmds = [PUSH(5); PUSH(7); PUSH(0); GET];;
+let state = (0,  cmds);;
+let _ = eval_program (state) [];;

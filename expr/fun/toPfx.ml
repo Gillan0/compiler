@@ -3,8 +3,8 @@ open FunPfx.Ast
 
 let p = Hashtbl.create 1;;
 
-let rec generate expr =  
-  let aux depth = function
+let generate expr =  
+  let rec aux depth = function
   
   | Const v ->  [PUSH(v)]
 
@@ -24,11 +24,11 @@ let rec generate expr =
                       [PUSH (Hashtbl.find p var_name); GET]
                     with Not_found -> failwith ("Unbound variable: " ^ var_name))
   
-  | App(Fun(var_name, v2), v3) -> (aux depth v3)@(aux (depth+1) Fun(var_name, v2))@[EXEC]
+  | App(Fun(var_name, v2), v3) -> (aux depth v3)@(aux (depth+1) (Fun(var_name, v2)))@[EXEC]
   
   | App(_, _) -> failwith "Left term of application must be a function"
   
-  | Fun(var_name, v) -> Hashtbl.add p var_name (depth+1); 
+  | Fun(var_name, v) -> Hashtbl.add p var_name (depth); 
                         [EXEC_SEQ(aux (depth+1) v)]
   
   in aux 0 expr;;
