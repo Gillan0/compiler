@@ -1,7 +1,7 @@
 (library
  (name funPfx) 
  (libraries utils)
- (modules Ast Lexer Parser))
+ (modules Ast Lexer Parser Eval))
 
 (ocamllex lexer)
 

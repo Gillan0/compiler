@@ -15,7 +15,7 @@ type program = int * command list
 
 (* add here all useful functions and types  related to the AST: for instance  string_of_ functions *)
 
-let string_of_command = function
+let rec string_of_command = function
   |PUSH(a) -> "push"^string_of_int(a)
   |POP -> "pop"
   |SWAP -> "swap"
@@ -26,7 +26,7 @@ let string_of_command = function
   |REM -> "rem"
   |EXEC -> "exec"
   |GET -> "get"
-  |EXEC_SEQ(commands) -> "exec_seq"^(List.map string_of_command commands)
+  |EXEC_SEQ(commands) -> "exec_seq"^ ( String.concat " " (List.map string_of_command commands))
 
 let string_of_commands cmds = String.concat " " (List.map string_of_command cmds)
 

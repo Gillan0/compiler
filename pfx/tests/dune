@@ -7,3 +7,8 @@
   (name compile_test)
   (modules compile_test)
   (libraries basicPfx))
+
+(test
+  (name fun_test)
+  (modules fun_test)
+  (libraries funPfx))
