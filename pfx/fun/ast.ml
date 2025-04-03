@@ -9,7 +9,7 @@ type command =
   |REM
   |EXEC_SEQ of command list 
   |EXEC
-  |GET of int ;;
+  |GET;;
 
 type program = int * command list
 
@@ -25,7 +25,7 @@ let string_of_command = function
   |DIV -> "div"
   |REM -> "rem"
   |EXEC -> "exec"
-  |GET(e) -> "get"^string_of_int(e)
+  |GET -> "get"
   |EXEC_SEQ(commands) -> "exec_seq"^(List.map string_of_command commands)
 
 let string_of_commands cmds = String.concat " " (List.map string_of_command cmds)

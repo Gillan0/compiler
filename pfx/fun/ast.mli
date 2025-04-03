@@ -10,7 +10,7 @@ type command =
 |REM 
 |EXEC_SEQ of command list 
 |EXEC
-|GET of int ;;
+|GET;;
 
 (* The type for programs *)
 type program = int * command list

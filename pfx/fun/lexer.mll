@@ -13,7 +13,7 @@
   | DIV -> print_string "DIV"
   | REM -> print_string "REM"
   | INT i -> Printf.printf "INT %d" i
-  | GET i -> Printf.printf "GET %d" i
+  | GET -> print_string "GET"
   | EXEC_SEQ -> print_string "EXEC_SEQ"
   | LPAR -> print_string "("
   | RPAR -> print_string ")"
@@ -50,7 +50,7 @@ rule token = parse
   |"pop" { POP }
   |"swap" { SWAP }
   |"push" blank* (digit+ as nb) {PUSH(int_of_string nb)}
-  |"get" blank* (digit+ as nb) {GET(int_of_string nb)}
+  |"get" {GET}
   |"exec" { EXEC }  
   |"exec_seq" { EXEC_SEQ }  
   |"(" { LPAR }  

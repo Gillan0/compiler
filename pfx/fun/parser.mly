@@ -8,11 +8,10 @@
  **************)
 
 (* enter tokens here, they should begin with %token *)
-%token EOF POP SWAP ADD SUB MUL DIV REM EXEC
+%token EOF POP SWAP ADD SUB MUL DIV REM EXEC GET
 %token EXEC_SEQ LPAR RPAR
 %token <int> INT
 %token <int> PUSH
-%token <int> GET
 
 (******************************
  * Entry points of the parser *
@@ -49,7 +48,7 @@ command:
 | MUL { MUL }
 | DIV { DIV }
 | REM { REM }
-| i=GET { GET(i) }
+| GET { GET }
 | EXEC { EXEC }
 
 %%
