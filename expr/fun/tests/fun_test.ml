@@ -1,4 +1,5 @@
 open FunPfx.Eval
+open FunPfx.Ast
 open FunExpr.ToPfx
 open FunExpr.Ast
 
@@ -32,3 +33,10 @@ let expr = App(Fun("x", Binop(Badd, Const(5), App(Fun("y", Binop(Bmul, Var("y"),
 let pfx_cmds = generate expr;;
 let state = (0,  pfx_cmds);;
 let _ = eval_program (state) [];;
+
+let expr = App(Fun("x", App(Fun("y", Binop(Bsub, Var("x"), Var("y"))), Const(8))), Const(12));;
+let pfx_cmds = generate expr;;
+let state = (0,  pfx_cmds);;
+let _ = eval_program (state) [];;
+
+Printf.printf "Commandes Q°10.4 : %s" (string_of_commands pfx_cmds);;

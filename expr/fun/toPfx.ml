@@ -45,6 +45,9 @@ let generate expr =
   | Uminus v -> (aux depth (i+1) v)@[PUSH(0); SUB]
   
   | Var var_name -> (try 
+                      increment_all p;
+                      let n = Hashtbl.find p var_name in 
+                      Hashtbl.replace p var_name (n-1);
                       [PUSH (Hashtbl.find p var_name); GET]
                     with Not_found -> failwith ("Unbound variable: " ^ var_name))
   

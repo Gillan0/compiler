@@ -18,5 +18,7 @@ type program = int * command list
 (* Converting a command to a string for printing *)
 val string_of_command : command -> string
 
+val string_of_commands : command list -> string
+
 (* Converting a program to a string for printing *)
 val string_of_program : program -> string
