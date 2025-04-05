@@ -17,7 +17,7 @@
 
   let mk_int nb loc=
     try INT (int_of_string nb)
-    with Failure _ -> raise (Location.Error(Printf.sprintf "Illegal integer '%s': " nb, loc))
+    with Failure _ -> Location.print loc ; raise (Location.Error(Printf.sprintf "Illegal integer '%s': " nb, loc))
 }
 
 let newline = (['\n' '\r'] | "\r\n")
@@ -46,4 +46,4 @@ rule token = parse
   |"swap" { SWAP }
   |"push" blank* (digit+ as nb) {PUSH(int_of_string nb)}
   (* illegal characters *)
-  | _ as c                  { raise (Location.Error(Printf.sprintf "Illegal character '%c': " c, Location.curr lexbuf)) }
+  | _ as c                  { Location.print (Location.curr lexbuf) ; raise (Location.Error(Printf.sprintf "Illegal character '%c':" c , (Location.curr lexbuf))) }
