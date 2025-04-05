@@ -37,6 +37,9 @@ rule token = parse
   (* For function support *)
   | "fun"    { FUN }
   | "->"     { RA }
+  | "let"     { LET }
+  | "="     { EQUAL }
+  | "in"     { IN }
   (* identifiers *)
   | ident as id { IDENT id }
   (* illegal characters *)
