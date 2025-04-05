@@ -1,17 +1,11 @@
 open Ast
 open FunPfx.Ast
-(*
-let print_hashtable htbl =
-  Hashtbl.iter (fun key value ->
-    Printf.printf "Key: %s, Value: %d\n" key value
-  ) htbl;;
-*)
+
 let increment_all p =
 
   Hashtbl.iter (fun key value ->
     Hashtbl.replace p key (value + 1)
   ) p ;;
-
 
 let generate expr =  
 
