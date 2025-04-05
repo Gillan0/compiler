@@ -47,3 +47,8 @@ let _ = eval_program (state) [];;
 let cmds = [EXEC_SEQ([PUSH(3); ADD]); EXEC_SEQ([PUSH(5); PUSH(2); MUL]); APPEND; EXEC];;
 let state = (0,  cmds);;
 let _ = eval_program (state) [];;
+
+(* Test #6 : Expected result ERROR*)
+let cmds = [PUSH(5); EXEC_SEQ([PUSH(5); PUSH(2); MUL]); APPEND; EXEC];;
+let state = (0,  cmds);;
+let _ = eval_program (state) [];;
