@@ -37,3 +37,13 @@ let _ = eval_program (state) [];;
 let cmds = [PUSH(5); PUSH(7); PUSH(0); GET];;
 let state = (0,  cmds);;
 let _ = eval_program (state) [];;
+
+(* Test #4 : Expected result 8*)
+let cmds = [EXEC_SEQ([PUSH(3); ADD]); PUSH(5); APPEND; EXEC];;
+let state = (0,  cmds);;
+let _ = eval_program (state) [];;
+
+(* Test #5 : Expected result 13*)
+let cmds = [EXEC_SEQ([PUSH(3); ADD]); EXEC_SEQ([PUSH(5); PUSH(2); MUL]); APPEND; EXEC];;
+let state = (0,  cmds);;
+let _ = eval_program (state) [];;

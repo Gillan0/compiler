@@ -33,6 +33,8 @@ let step state =
   | EXEC_SEQ(q1) :: q2, stack -> Ok (q2, (EXEC_SEQ(q1)) :: stack)
   | EXEC::q2, EXEC_SEQ(q1)::stack -> Ok(q1 @ q2, stack)
   | GET::q, Int(i)::stack when (List.length stack) > i -> let el = (List.nth stack i) in Ok(q, el::stack)
+  | APPEND::q1, Int(i)::EXEC_SEQ(q2)::stack -> Ok(q1, EXEC_SEQ((PUSH(i)::q2))::stack)
+  | APPEND::q1, EXEC_SEQ(q2)::EXEC_SEQ(q3)::stack -> Ok(q1, EXEC_SEQ(q2@q3)::stack)
   (* Invalid configurations *)
   | ADD::_, _ -> Error("Runtime Error",state)
   | SUB::_, _ -> Error("Runtime Error",state)
@@ -41,6 +43,7 @@ let step state =
   | REM::_, _ -> Error("Runtime Error",state)
   | EXEC::_, _ -> Error("Runtime Error",state)  
   | GET::_, _ -> Error("Runtime Error",state)  
+  | APPEND::_, _ -> Error("Runtime Error",state)  
   | _ , _::[] -> Error("Runtime Error",state)
   | _ , [] -> Error("Runtime Error",state);;
 

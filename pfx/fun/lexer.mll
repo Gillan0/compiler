@@ -18,6 +18,7 @@
   | LPAR -> print_string "("
   | RPAR -> print_string ")"
   | EXEC -> print_string "EXEC"
+  | APPEND -> print_string "APPEND"
   | EOF -> print_string "EOF";;
 
   let mk_int nb loc=
@@ -55,5 +56,6 @@ rule token = parse
   |"exec_seq" { EXEC_SEQ }  
   |"(" { LPAR }  
   |")" { RPAR }  
+  |"append" { APPEND } 
   (* illegal characters *)
   | _ as c                  { raise (Location.Error(Printf.sprintf "Illegal character '%c': " c, Location.curr lexbuf)) }

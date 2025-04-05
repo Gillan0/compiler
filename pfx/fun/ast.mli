@@ -10,6 +10,7 @@ type command =
 |REM 
 |EXEC_SEQ of command list 
 |EXEC
+|APPEND
 |GET;;
 
 (* The type for programs *)

@@ -8,7 +8,7 @@
  **************)
 
 (* enter tokens here, they should begin with %token *)
-%token EOF POP SWAP ADD SUB MUL DIV REM EXEC GET
+%token EOF POP SWAP ADD SUB MUL DIV REM EXEC GET APPEND
 %token EXEC_SEQ LPAR RPAR
 %token <int> INT
 %token <int> PUSH
@@ -50,5 +50,6 @@ command:
 | REM { REM }
 | GET { GET }
 | EXEC { EXEC }
+| APPEND { APPEND }
 
 %%
