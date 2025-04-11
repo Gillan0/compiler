@@ -75,5 +75,4 @@ let state = (0,  pfx_cmds);;
 let _ = eval_program (state) [];;
 Printf.printf "Command test 3 var: \n%s\n" (string_of_commands pfx_cmds);;
 
-
 let _ = Printf.printf "## Ending test for conversion from Expr to Pfx (vers. fun)\n"
