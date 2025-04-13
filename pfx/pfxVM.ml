@@ -29,4 +29,4 @@ let _ =
     "Usage: program_name [options]";  (* Usage message *)
 
   (* Call parse_eval with a file path *)
-  parse_eval "/home/gillan0/DCL/LALOG/compiler/pfx/tests/ok_prog.pfx";;
+  parse_eval "./pfx/tests/ok_prog.pfx";;

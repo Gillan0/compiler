@@ -19,4 +19,19 @@ let compile file =
   with Sys_error _ ->
     print_endline ("Can't find file '" ^ file ^ "'")
 
-let _ = compile "ok_prog.pfx";;
+let _ = Printf.printf "\n\n\n## Starting test for compilation in basic Pfx\n"
+
+let _ = Printf.printf "\n# First test : Expected result Error at line 4 \n";;
+try 
+  let _ = compile "./error_prog.pfx" in ()
+with
+| e -> Printf.printf "Unexpected error: %s\n" (Printexc.to_string e)
+
+let _ = Printf.printf "\n# Second test : Expected result INT 0 PUSH 2 PUSH 7 PUSH 3 ADD DIV EOF \n";;
+try 
+  let _ = compile "./ok_prog.pfx" in ()
+with
+| e -> Printf.printf "Unexpected error: %s\n" (Printexc.to_string e)
+
+
+let _ = Printf.printf "\n## Ending test for compilation in basic Pfx\n\n\n"
