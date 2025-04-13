@@ -81,30 +81,25 @@ Structure of the project
 
 The project is organized as following:
 
-Explain here the organization of your project, what is the use of each file or
-group of files, etc.
-
-You may also show the file tree as the following example:
-
 project
 ├── README
 ├── dune-project
 ├── expr: the expr compiler
 │   ├── README
 │   ├── basic : the first version of the expr compiler
-│   │   ├── ast.ml
+│   │   ├── ast.ml : implements expr AST
 │   │   ├── ast.mli
 │   │   ├── dune
-│   │   ├── eval.ml
+│   │   ├── eval.ml : implements the evaluation of a expr expression
 │   │   ├── eval.mli
-│   │   ├── lexer.mll
-│   │   ├── parser.mly
+│   │   ├── lexer.mll : recognize tokens in a program in expr
+│   │   ├── parser.mly : recognize sentences from expr tokens, return an AST and control
 │   │   ├── tests: for tests
 │   │   │   └── an_example.expr
-│   │   ├── toPfx.ml
+│   │   ├── toPfx.ml : implements the expr semantics
 │   │   └── toPfx.mli
 │   ├── common : the elements common to both version of the compiler
-│   │   ├── binOp.ml
+│   │   ├── binOp.ml : define the binary operations for expr
 │   │   ├── binOp.mli
 │   │   └── dune
 │   ├── compiler.ml: main file for the expr compiler
@@ -113,13 +108,13 @@ project
 │   │   ├── tests: for tests
 │   │   │   ├── dune
 │   │   │   ├── fun_test.expr
-│   │   │   └── fun_test.ml
-│   │   ├── ast.ml
+│   │   │   └── fun_test.ml : test the evaluation and the compilation for the new version
+│   │   ├── ast.ml : implements expr AST
 │   │   ├── ast.mli
 │   │   ├── dune
-│   │   ├── lexer.mll
-│   │   ├── parser.mly
-│   │   ├── toPfx.ml
+│   │   ├── lexer.mll : recognize tokens in a program in expr
+│   │   ├── parser.mly : recognize sentences from expr tokens, return an AST and control
+│   │   ├── toPfx.ml : implements the expr semantics
 │   │   └── toPfx.mli
 │   └── main.ml
 ├── pfx: the pfx VM (Virtual Machine)
@@ -129,25 +124,25 @@ project
 │   │   ├── dune
 │   │   ├── eval.ml : implements the step reduction of the stack given an instruction
 │   │   ├── eval.mli
-│   │   ├── lexer.mll
-│   │   └── parser.mly
+│   │   ├── lexer.mll : recognize tokens in a program in pfx
+│   │   └── parser.mly : recognize sentences from pfx tokens, return an AST and control
 │   ├── fun: the new version of the pfx
-│   │   ├── ast.ml
+│   │   ├── ast.ml : define the pfx instructions
 │   │   ├── ast.mli
 │   │   ├── dune
-│   │   ├── eval.ml
+│   │   ├── eval.ml : implements the step reduction of the stack given an instruction
 │   │   ├── eval.mli
-│   │   ├── lexer.mll
-│   │   └── parser.mly
+│   │   ├── lexer.mll : recognize tokens in a program in pfx
+│   │   └── parser.mly : recognize sentences from pfx tokens, return an AST and control
 │   │── tests: for tests
-│   │   |── basic_step_test.ml
-│   │   |── compile_test.ml
+│   │   |── basic_step_test.ml : test the implementation of the step reduction of the stack for the new version
+│   │   |── compile_test.ml : test if the first version compile
 │   │   |── dune
-│   │   |── error_prog.pfx
-│   │   |── fun_prog.pfx
-│   │   |── fun_step_test.ml
-│   │   |── fun_test.ml
-│   │   └── ok_prog.pfx
+│   │   |── error_prog.pfx : pfx program that return an error
+│   │   |── fun_prog.pfx : pfx program for the new version
+│   │   |── fun_step_test.ml : test the implementation of the step reduction of the stack for the new version
+│   │   |── fun_test.ml : test both the step reduction and if the new version compile
+│   │   └── ok_prog.pfx : pfx program for the compilation test of the first version
 │   │── dune
 │   └── pfxVM.ml: main file for the pfx VM
 └── utils
