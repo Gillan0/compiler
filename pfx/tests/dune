@@ -1,6 +1,6 @@
 (test
-  (name step_test)
-  (modules step_test)
+  (name basic_step_test)
+  (modules basic_step_test)
   (libraries basicPfx))
 
 (test
@@ -11,4 +11,9 @@
 (test
   (name fun_test)
   (modules fun_test)
+  (libraries funPfx))
+
+(test
+  (name fun_step_test)
+  (modules fun_step_test)
   (libraries funPfx))

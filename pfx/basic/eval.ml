@@ -20,9 +20,13 @@ let step state =
   | ADD :: q , v1::v2::stack -> Ok (q, (v1 + v2)::stack)
   | SUB :: q, v1::v2::stack -> Ok (q, (v1 - v2)::stack)
   | MUL :: q, v1::v2::stack -> Ok (q, (v1 * v2)::stack)
-  | DIV :: q, v1::v2::stack -> Ok (q, (v1 / v2)::stack)
-  | REM :: q, v1::v2::stack -> Ok (q, (v1 mod v2)::stack)
+  | DIV :: q, v1::v2::stack when v2 <> 0 -> Ok (q, (v1 / v2)::stack)
+  | REM :: q, v1::v2::stack when v2 <> 0 -> Ok (q, (v1 mod v2)::stack)
   (* Invalid configurations *)
+  | DIV ::_, _::0::_ -> Error("Division by Zero",state)
+  | DIV ::_, _ -> Error("Runtime Error",state)
+  | REM ::_, _::0::_ -> Error("Division by Zero",state)
+  | REM ::_, _ -> Error("Runtime Error",state)
   | _ , _::[] -> Error("Runtime Error",state)
   | _ , [] -> Error("Runtime Error",state);;
 

@@ -37,6 +37,7 @@ rule token = parse
   (* For function support *)
   | "fun"    { FUN }
   | "->"     { RA }
+  (* For let support *)
   | "let"     { LET }
   | "="     { EQUAL }
   | "in"     { IN }

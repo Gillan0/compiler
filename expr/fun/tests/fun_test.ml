@@ -3,15 +3,15 @@ open FunPfx.Ast
 open FunExpr.ToPfx
 open FunExpr.Ast
 
-let _ = Printf.printf "## Starting test for conversion from Expr to Pfx (vers. fun)\n"
+let _ = Printf.printf "\n\n\n## Starting test for conversion from Expr to Pfx (vers. fun)\n"
 
 (* f(x) = x + 1 puis f(2)=3 *)
 let expr = App(Fun("x", Binop(Badd, Var("x"), Const(1))), Const(2));;
 let pfx_cmds = generate expr;;
+Printf.printf "Commandes Q°10.1 : \n%s\n" (string_of_commands pfx_cmds);;
 let state = (0,  pfx_cmds);;
 let _ = eval_program (state) [];;
 
-Printf.printf "Commandes Q°10.1 : \n%s\n" (string_of_commands pfx_cmds);;
 
 (* f(x) = x + 2 puis f(5)=7 *)
 let expr = App(Fun("x", Binop(Badd, Var("x"), Const(2))), Const(5));;
@@ -52,10 +52,9 @@ let _ = eval_program (state) [];;
 (* h(x, y) = x - y puis h(12, 8) = 4 *)
 let expr = App(Fun("x", App(Fun("y", Binop(Bsub, Var("x"), Var("y"))), Const(8))), Const(12));;
 let pfx_cmds = generate expr;;
+Printf.printf "Commandes Q°10.4 : \n%s\n" (string_of_commands pfx_cmds);;
 let state = (0,  pfx_cmds);;
 let _ = eval_program (state) [];;
-
-Printf.printf "Commandes Q°10.4 : \n%s\n" (string_of_commands pfx_cmds);;
 
 (* f(x, y, z) = x - y * z puis h(16, 2, 3) = 10 *)
 let expr = App(Fun("x", 
@@ -71,8 +70,35 @@ let expr = App(Fun("x",
                     )),  Const(2)
                   )), Const(16));;
 let pfx_cmds = generate expr;;
+Printf.printf "Command test 3 var: \n%s\n" (string_of_commands pfx_cmds);;
 let state = (0,  pfx_cmds);;
 let _ = eval_program (state) [];;
-Printf.printf "Command test 3 var: \n%s\n" (string_of_commands pfx_cmds);;
 
-let _ = Printf.printf "## Ending test for conversion from Expr to Pfx (vers. fun)\n"
+(* Error testing *)
+
+(* Unbound variable. Should return error *)
+let expr = Binop(Bsub, Var("x"), Const(12));;
+try 
+  let _ = generate expr in ()
+with
+| Failure msg -> Printf.printf "Error: %s\n" msg
+| e -> Printf.printf "Unexpected error: %s\n" (Printexc.to_string e)
+
+(* Unbound variable. Should return error*)
+let expr = App(Fun("x", Binop(Bsub, Var("x"), Var("y"))), Const(12));;
+try 
+  let _ = generate expr in ()
+with
+| Failure msg -> Printf.printf "Error: %s\n" msg
+| e -> Printf.printf "Unexpected error: %s\n" (Printexc.to_string e)
+
+(* 2 nested functions with same variable name. Should return error *)
+let expr = App(Fun("x", App(Fun("x", Binop(Bsub, Var("x"), Var("x"))), Const(8))), Const(12));;
+try 
+  let _ = generate expr in ()
+with
+| Failure msg -> Printf.printf "Error: %s\n" msg
+| e -> Printf.printf "Unexpected error: %s\n" (Printexc.to_string e)
+
+
+let _ = Printf.printf "## Ending test for conversion from Expr to Pfx (vers. fun)\n\n\n"

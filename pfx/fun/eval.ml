@@ -1,6 +1,7 @@
 open Ast
 open Printf
 
+(* Define stack type for function support (int & exec_seq can be in the stack) *)
 type stack_type = 
   | Int of int
   | EXEC_SEQ of command list 
@@ -28,18 +29,22 @@ let step state =
   | ADD :: q , Int(v1)::Int(v2)::stack -> Ok (q, Int(v1 + v2)::stack)
   | SUB :: q, Int(v1)::Int(v2)::stack -> Ok (q, Int(v1 - v2)::stack)
   | MUL :: q, Int(v1)::Int(v2)::stack -> Ok (q, Int(v1 * v2)::stack)
-  | DIV :: q, Int(v1)::Int(v2)::stack -> Ok (q, Int(v1 / v2)::stack)
-  | REM :: q, Int(v1)::Int(v2)::stack -> Ok (q, Int(v1 mod v2)::stack)
+  | DIV :: q, Int(v1)::Int(v2)::stack when v2 <> 0 -> Ok (q, Int(v1 / v2)::stack)
+  | REM :: q, Int(v1)::Int(v2)::stack when v2 <> 0 -> Ok (q, Int(v1 mod v2)::stack)
+  (* For function support *)
   | EXEC_SEQ(q1) :: q2, stack -> Ok (q2, (EXEC_SEQ(q1)) :: stack)
   | EXEC::q2, EXEC_SEQ(q1)::stack -> Ok(q1 @ q2, stack)
   | GET::q, Int(i)::stack when (List.length stack) > i -> let el = (List.nth stack i) in Ok(q, el::stack)
+  (* For closure support *)
   | APPEND::q1, Int(i)::EXEC_SEQ(q2)::stack -> Ok(q1, EXEC_SEQ((PUSH(i)::q2))::stack)
   | APPEND::q1, EXEC_SEQ(q2)::EXEC_SEQ(q3)::stack -> Ok(q1, EXEC_SEQ(q2@q3)::stack)
   (* Invalid configurations *)
   | ADD::_, _ -> Error("Runtime Error",state)
   | SUB::_, _ -> Error("Runtime Error",state)
   | MUL::_, _ -> Error("Runtime Error",state)
-  | DIV::_, _ -> Error("Runtime Error",state)
+  | DIV ::_, _::Int(0)::_ -> Error("Division by Zero",state)
+  | DIV::_, _ -> Error("Division by Zero",state)
+  | REM::_, _::Int(0)::_ -> Error("Runtime Error",state)
   | REM::_, _ -> Error("Runtime Error",state)
   | EXEC::_, _ -> Error("Runtime Error",state)  
   | GET::_, _ -> Error("Runtime Error",state)  

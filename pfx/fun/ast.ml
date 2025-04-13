@@ -7,10 +7,12 @@ type command =
   |MUL
   |DIV
   |REM
+  (* For function support *)
   |EXEC_SEQ of command list 
   |EXEC
-  |APPEND
-  |GET;;
+  |GET
+  (* For closure support *)
+  |APPEND;;
 
 type program = int * command list
 
@@ -25,10 +27,12 @@ let rec string_of_command = function
   |MUL -> "mul"
   |DIV -> "div"
   |REM -> "rem"
+  (* For function support *)
   |EXEC -> "exec"
   |GET -> "get"
-  |APPEND -> "append"
   |EXEC_SEQ(commands) -> "exec_seq("^ ( String.concat " " (List.map string_of_command commands))^")"
+  (* For closure support *)
+  |APPEND -> "append"
 
 let string_of_commands cmds = String.concat " " (List.map string_of_command cmds)
 

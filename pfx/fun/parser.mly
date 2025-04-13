@@ -9,9 +9,10 @@
 
 (* enter tokens here, they should begin with %token *)
 %token EOF POP SWAP ADD SUB MUL DIV REM EXEC GET APPEND
-%token EXEC_SEQ LPAR RPAR
 %token <int> INT
 %token <int> PUSH
+(* Tokens for executable sequence *)
+%token EXEC_SEQ LPAR RPAR
 
 (******************************
  * Entry points of the parser *

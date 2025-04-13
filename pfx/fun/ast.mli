@@ -1,17 +1,19 @@
 (* The type of the commands for the stack machine *)
 type command =
-|PUSH of int
-|POP
-|SWAP
-|ADD
-|SUB
-|MUL
-|DIV
-|REM 
-|EXEC_SEQ of command list 
-|EXEC
-|APPEND
-|GET;;
+  |PUSH of int
+  |POP
+  |SWAP
+  |ADD
+  |SUB
+  |MUL
+  |DIV
+  |REM
+  (* For function support *)
+  |EXEC_SEQ of command list 
+  |EXEC
+  |GET
+  (* For closure support *)
+  |APPEND;;
 
 (* The type for programs *)
 type program = int * command list
