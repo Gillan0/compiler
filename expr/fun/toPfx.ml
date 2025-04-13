@@ -111,10 +111,10 @@ let rec get_free_variable bound_var = function
 let add_free_var var_pos free_var =
   let rec aux_add_free_var var_pos = function
   |[] -> []
-  |var_name::t -> 
+  |var_name::t ->
             let pos = Hashtbl.find var_pos var_name in 
-            Hashtbl.replace var_pos var_name (pos + (List.length free_var));
-            [PUSH(pos); GET; APPEND] @ (aux_add_free_var var_pos t)
+            Hashtbl.replace var_pos var_name ( (List.length t));
+            [PUSH(pos + (List.length free_var)); GET; APPEND] @ (aux_add_free_var var_pos t)
   in aux_add_free_var var_pos free_var;;
 
 (* Returns a list of commands to remove all formerly added free variables via APPEND *)

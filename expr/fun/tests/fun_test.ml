@@ -12,7 +12,6 @@ Printf.printf "Commandes Q°10.1 : \n%s\n" (string_of_commands pfx_cmds);;
 let state = (0,  pfx_cmds);;
 let _ = eval_program (state) [];;
 
-
 (* f(x) = x + 2 puis f(5)=7 *)
 let expr = App(Fun("x", Binop(Badd, Var("x"), Const(2))), Const(5));;
 let pfx_cmds = generate expr;;
