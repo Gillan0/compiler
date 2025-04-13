@@ -1,28 +1,58 @@
 AUTHORS
 -------
 
-- NAME1
-- NAME2
-…
+- GILLARD ANTONINO
+- FAURE AUGUSTIN
 
 ===============
 
 Description of the project
 --------------------------
 
-This μ-project is a very simple compiler…
+This μ-project is a simple compiler system composed of two main components: the Pfx virtual machine and the Expr
+compiler, both written in OCaml using ocamllex and menhir. It aims to showcase stack-based computation and compiler
+design through the implementation of these interconnected systems.
+
+The Pfx virtual machine is designed to execute programs using a stack-based language.
+Programs in Pfx are structured as pairs i, Q where:
+  - i denotes the number of arguments required for execution.
+  - Q represents the sequence of stack-based instructions.
+
+The existing Pfx instructions can be divided into three categories:
+  Stack Operations:
+    push x: Pushes an integer xx onto the stack.
+    pop: Removes the top element from the stack.
+    swap: Exchanges the top two elements of the stack.
+
+  Arithmetic Operations:
+    Includes add, sub, mul, div, and rem, which:
+      Use the top two elements of the stack as operands.
+      Push the result back onto the stack after computation.
+
+  Advanced Instructions:
+    exec: Executes an executable sequence stored at the top of the stack.
+    get: Pops an integer ii and duplicates the ii-th element of the stack at the top.
+    append: Dynamically adds commands to executable sequences.
+
+The Expr compiler is a complementary component that translates programs written in the
+arithmetic expression language Expr into Pfx instructions.
+
+Expr Language Features:
+    Arithmetic Operations: This includes common mathematical operations such as addition,
+  subtraction, multiplication, division, and handling negative values.
+    Variables and Constants: Provides the ability to use named variables and constant
+  values within expressions for greater flexibility and readability.
+    Functions and Application Expressions: Allows defining functions and applying them
+  within expressions
 
 ===============
 
 Sources
 -------
 
-Git repository: https://redmine-df.telecom-bretagne.eu/git/PROJECTNAME
+Git repository: https://github.com/Gillan0/compiler
 
-(obviously, you _will_ use a version control system such as Git, IMT
-Atlantique provides a project management platform: use it!)
-
-Release : tag 1.0 or commit acdeacdacdacdacd
+Release : tag 3.0
 
 ===============
 
@@ -31,7 +61,7 @@ How to…
 
 …retrieve the sources?
 
-  git clone https://redmine-df.telecom-bretagne.eu/git/PROJECTNAME
+  git clone https://github.com/Gillan0/compiler
 
 …compile?
 
@@ -61,7 +91,7 @@ project
 ├── dune-project
 ├── expr: the expr compiler
 │   ├── README
-│   ├── basic
+│   ├── basic : the first version of the expr compiler
 │   │   ├── ast.ml
 │   │   ├── ast.mli
 │   │   ├── dune
@@ -71,31 +101,54 @@ project
 │   │   ├── parser.mly
 │   │   ├── tests: for tests
 │   │   │   └── an_example.expr
-│   │   ├── toPfx.ml             <- To edit
+│   │   ├── toPfx.ml
 │   │   └── toPfx.mli
-│   ├── common
+│   ├── common : the elements common to both version of the compiler
 │   │   ├── binOp.ml
 │   │   ├── binOp.mli
 │   │   └── dune
 │   ├── compiler.ml: main file for the expr compiler
 │   ├── dune
-│   ├── fun: the expr parser for section 7
+│   ├── fun: the new version of the expr compiler
+│   │   ├── tests: for tests
+│   │   │   ├── dune
+│   │   │   ├── fun_test.expr
+│   │   │   └── fun_test.ml
 │   │   ├── ast.ml
 │   │   ├── ast.mli
+│   │   ├── dune
 │   │   ├── lexer.mll
-│   │   └── parser.mly
+│   │   ├── parser.mly
+│   │   ├── toPfx.ml
+│   │   └── toPfx.mli
 │   └── main.ml
-├── pfx: the pfx VM
-│   ├── basic
-│   │   ├── ast.ml               <- To edit
+├── pfx: the pfx VM (Virtual Machine)
+│   ├── basic: the first version of the pfx
+│   │   ├── ast.ml : define the pfx instructions
 │   │   ├── ast.mli
 │   │   ├── dune
-│   │   ├── eval.ml              <- To edit
+│   │   ├── eval.ml : implements the step reduction of the stack given an instruction
 │   │   ├── eval.mli
-│   │   ├── lexer.mll            <- To edit
-│   │   ├── parser.mly           <- To edit
-│   │   └── tests: for tests
-│   │       └── ok_prog.pfx
+│   │   ├── lexer.mll
+│   │   └── parser.mly
+│   ├── fun: the new version of the pfx
+│   │   ├── ast.ml
+│   │   ├── ast.mli
+│   │   ├── dune
+│   │   ├── eval.ml
+│   │   ├── eval.mli
+│   │   ├── lexer.mll
+│   │   └── parser.mly
+│   │── tests: for tests
+│   │   |── basic_step_test.ml
+│   │   |── compile_test.ml
+│   │   |── dune
+│   │   |── error_prog.pfx
+│   │   |── fun_prog.pfx
+│   │   |── fun_step_test.ml
+│   │   |── fun_test.ml
+│   │   └── ok_prog.pfx
+│   │── dune
 │   └── pfxVM.ml: main file for the pfx VM
 └── utils
     ├── dune
@@ -106,9 +159,8 @@ project
 Progress
 --------
 
-- We stopped at question 10.1 (proof of derivation)
+- We stopped at question 13.6 (Describe step by step the evaluation of Pfx translation)
 - There is still a bug in question 8.3 (new version of generate function)
-- …
 
 ===============
 
@@ -128,7 +180,6 @@ Helpful resources
   https://stackoverflow/xxxxxxi
   https://stackoverflow/yyyyyy
 - someone on GitHub provided an interesting example very similar to the answer of the question x.y : https://github.com/xxxx
-- …
 
 ===============
 
