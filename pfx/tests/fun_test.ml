@@ -21,7 +21,7 @@ let compile file =
   with Sys_error _ ->
     print_endline ("Can't find file '" ^ file ^ "'")
 
-let _ = compile "fun_prog.pfx";;
+let _ = compile "./fun_prog.pfx";;
 
 (* Test #1 : Expected result 3*)
 let cmds = [PUSH(1); PUSH(5); SWAP; POP; PUSH(8); ADD; EXEC_SEQ([PUSH(2);PUSH(1);ADD]); EXEC];;

@@ -85,6 +85,7 @@ The project is organized as following:
 
 project
 ├── README
+├── README.pdf : answers to non-code related questions
 ├── dune-project
 ├── expr: the expr compiler
 │   ├── README
